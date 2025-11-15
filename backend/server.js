@@ -149,6 +149,10 @@ app.post('/api/download', async (req, res) => {
 
         // Build command - only add merge format for video formats
         let command = `yt-dlp ${formatOption} --restrict-filenames`;
+        
+        // Add YouTube-specific args to avoid bot detection
+        command += ` --extractor-args "youtube:player_client=default"`;
+        
         if (!audioFormats.includes(format.toLowerCase())) {
             command += ` --merge-output-format ${mergeFormat}`;
         }
