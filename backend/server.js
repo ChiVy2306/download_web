@@ -135,13 +135,13 @@ app.post('/api/download', async (req, res) => {
             }
             mergeFormat = audioFormat;
         } else {
-            // For video formats
+            // For video formats - don't force specific ext during download, only in merge
             if (quality === 'high') {
-                formatOption = `-f bestvideo[ext=${format}]+bestaudio[ext=m4a]/bestvideo+bestaudio/best`;
+                formatOption = `-f "bestvideo+bestaudio/best"`;
             } else if (quality === 'medium') {
-                formatOption = `-f "bestvideo[height<=720][ext=${format}]+bestaudio[ext=m4a]/bestvideo[height<=720]+bestaudio/best[height<=720]"`;
+                formatOption = `-f "bestvideo[height<=720]+bestaudio/best[height<=720]"`;
             } else if (quality === 'low') {
-                formatOption = `-f "bestvideo[height<=480][ext=${format}]+bestaudio[ext=m4a]/bestvideo[height<=480]+bestaudio/best[height<=480]"`;
+                formatOption = `-f "bestvideo[height<=480]+bestaudio/best[height<=480]"`;
             }
         }
 
@@ -180,11 +180,14 @@ app.post('/api/download', async (req, res) => {
 
         const downloadedFile = files[0];
         const fileUrl = `/downloads/videos/${downloadedFile}`;
+        
+        // Use Render URL in production or localhost in dev
+        const baseUrl = process.env.RENDER_EXTERNAL_URL || `http://localhost:${PORT}`;
 
         res.json({
             success: true,
             message: 'Video downloaded successfully',
-            downloadUrl: `http://localhost:${PORT}${fileUrl}`,
+            downloadUrl: `${baseUrl}${fileUrl}`,
             filename: downloadedFile
         });
 
