@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000';
+const API_URL = 'https://web-downloader-backend-site.onrender.com';
 
 // Elements
 const videoUrlInput = document.getElementById('videoUrl');
