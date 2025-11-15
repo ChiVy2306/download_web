@@ -150,15 +150,15 @@ app.post('/api/download', async (req, res) => {
         // Build command - only add merge format for video formats
         let command = `yt-dlp ${formatOption} --restrict-filenames`;
         
-        // Add YouTube-specific args to avoid bot detection
-        command += ` --extractor-args "youtube:player_client=default"`;
+        // Add YouTube-specific args to avoid bot detection and improve compatibility
+        command += ` --extractor-args "youtube:player_client=ios,web"`;
+        command += ` --user-agent "Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15"`;
+        command += ` --add-header "Accept-Language:en-US,en;q=0.9"`;
         
         if (!audioFormats.includes(format.toLowerCase())) {
             command += ` --merge-output-format ${mergeFormat}`;
         }
-        command += ` -o "${outputTemplate}" --no-playlist "${url}"`;
-
-        console.log('Executing:', command);
+        command += ` -o "${outputTemplate}" --no-playlist "${url}"`;        console.log('Executing:', command);
         console.log('Output will be saved to:', outputTemplate);
 
         const { stdout, stderr } = await execPromise(command, {
