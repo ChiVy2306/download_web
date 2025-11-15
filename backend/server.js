@@ -135,13 +135,13 @@ app.post('/api/download', async (req, res) => {
             }
             mergeFormat = audioFormat;
         } else {
-            // For video formats - don't force specific ext during download, only in merge
+            // For video formats - use simpler format selection for better compatibility
             if (quality === 'high') {
-                formatOption = `-f "bestvideo+bestaudio/best"`;
+                formatOption = `-f "best[height<=1080]/best"`;
             } else if (quality === 'medium') {
-                formatOption = `-f "bestvideo[height<=720]+bestaudio/best[height<=720]"`;
+                formatOption = `-f "best[height<=720]/best"`;
             } else if (quality === 'low') {
-                formatOption = `-f "bestvideo[height<=480]+bestaudio/best[height<=480]"`;
+                formatOption = `-f "best[height<=480]/best"`;
             }
         }
 
