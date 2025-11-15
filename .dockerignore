@@ -1,0 +1,17 @@
+node_modules /
+    downloads /
+    npm - debug.log
+        .env
+        .git /
+.gitignore
+README.md
+frontend /
+    ffmpeg - 7.1.1 - essentials_build /
+        ffmpeg - 8.0 /
+*.mp4
+        *.mkv
+        *.webm
+        *.avi
+        *.mp3
+        *.wav
+            .DS_Store
