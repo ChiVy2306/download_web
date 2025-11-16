@@ -13,7 +13,7 @@ sleep 8
 
 # Register and connect WARP
 echo "📡 Registering WARP..."
-warp-cli registration new || echo "Already registered"
+warp-cli registration new --accept-tos || echo "Already registered"
 sleep 2
 
 echo "🌐 Connecting to WARP..."
