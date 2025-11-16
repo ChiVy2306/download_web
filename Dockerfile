@@ -12,11 +12,15 @@ RUN apt-get update && apt-get install -y \
     lsb-release \
     && rm -rf /var/lib/apt/lists/*
 
+# Install D-Bus (required by WARP)
+RUN apt-get install -y dbus
+
 # Install Cloudflare WARP
 RUN curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | gpg --dearmor -o /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/cloudflare-client.list && \
     apt-get update && \
     apt-get install -y cloudflare-warp && \
+    mkdir -p /var/run/dbus && \
     rm -rf /var/lib/apt/lists/*
 
 # Install yt-dlp
